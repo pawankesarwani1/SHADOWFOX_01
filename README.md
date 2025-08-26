@@ -1,35 +1,18 @@
-# SHADOWFOX_01
-# 🚀 Features
-Responsive Design – Works across desktops, tablets, and mobile devices.
+🌐 Pawan Kesarwani — Portfolio Website
+Welcome to my personal developer portfolio!
+This site is a creative reflection of my journey as a Computer Science student and aspiring Web Developer. Built using HTML, CSS, and a touch of animation — it’s simple, responsive, and personal.
 
-Dark Theme – Sleek dark-mode UI for better aesthetics.
+🙋‍♂ About Me
+Hi there! I'm Pawan Kesarwani, currently pursuing my Bachelor of Engineering in Computer Science at MNM Jain Engineering College, Chennai. I have a deep interest in Frontend Development and am continuously learning and building exciting things on the web.
 
-Interactive Sections:
+✨ Website Features
+💻 Responsive design — mobile & desktop ready
+✨ Slide-in animations for smooth UI
+🧑‍🎓 Education & Skill showcase
+📁 Projects section to highlight my work
+📬 Contact form and social links (email, phone, LinkedIn)
+🛠 Tech Stack
+HTML5 - Structure of the web pages CSS3 - Styling and layout JavaScript (Basic) - For minimal interactivity keyframes - CSS animations 🖼 Images - Personal photos and laptop image
 
-Home – Intro and hero section with call-to-action buttons.
-
-About Me – Personal details and interests.
-
-Skills – Highlight of technical expertise.
-
-Education – Academic background.
-
-Certificates – Flip card animations for achievements.
-
-Projects – Links to portfolio projects with hover effects.
-
-Contact – Contact form with validation and copy-to-clipboard feature.
-
-Smooth Scroll & Reveal Animations using Intersection Observer API.
-
-Neon Glow Effects for modern visual appeal.
-
-# 🔗 Live Demo
-Click Here to View Demo
-
-# 🛠️ Tech Stack
-HTML5 – Semantic structure
-
-CSS3 – Styling with gradients, flexbox, grid, and animations
-
-JavaScript (Vanilla) – DOM manipulation and interac
+🌐 Live Demo
+[View portfolio ] https://pawankesarwani1.github.io/PRODIGY_WD_04/
