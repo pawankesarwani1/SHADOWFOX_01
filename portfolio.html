@@ -1,0 +1,546 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Creative Portfolio — Dark/Light Toggle</title>
+
+<!-- Google font (optional but matches style) -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+   :root{
+    /* dark theme (default) variables*/
+    --bg: #070707;
+    --panel: #0f1111;
+    --muted: #9aa0a6;
+    --text: #e9f0f0;
+    --accent: #00e6d8;
+    --accent-2: #00b3a8;
+    --glow: rgba(0,230,216,0.14);
+    --card-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    --glass: rgba(255,255,255,0.02); 
+  }
+  
+  /* Reset & base */
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:"Poppins",system-ui,Helvetica,Arial;
+    background:linear-gradient(90deg,var(--bg), #080808 60%);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    transition: background 0.45s ease, color 0.45s ease;
+  }
+
+  /* Header/navigation */
+  header{
+    position:fixed; left:0; right:0; top:0; z-index:150;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 48px;
+    background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.05));
+    backdrop-filter: blur(6px);box-shadow: 0 0 15px #00ffe0;
+    border-bottom: 1px solid rgba(255,255,255,0.02);
+  }
+  .brand { display:flex; align-items:center; gap:12px; }
+  .logo-dot{
+    width:42px; height:42px; border-radius:8px;
+    background:linear-gradient(135deg,var(--accent-2),var(--accent));
+    box-shadow: 0 6px 18px var(--glow);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; color:#051010;
+  }
+  .brand h1{font-size:16px; letter-spacing:1px; margin:0; font-weight:700}
+  nav{display:flex; gap:22px; align-items:center}
+  nav a{
+    color:var(--muted); text-decoration:none; font-size:14px; letter-spacing:0.6px;
+    transition: color .25s, text-shadow .25s;
+  }
+  nav a:hover{ color:var(--accent); text-shadow:0 0 12px rgba(0,230,216,0.18) }
+
+  
+  /* Page layout */
+  main{ padding-top:110px; max-width:1150px; margin:0 auto; padding-left:28px; padding-right:28px; }
+
+  /* HERO */
+  .hero{ display:grid; grid-template-columns: 1fr 360px; gap:40px; align-items:center; margin-top:10px; min-height:620px }
+  @media (max-width:980px){ .hero{ grid-template-columns: 1fr; padding-bottom: 20px} .hero-right{order:-1} }
+
+  .hero-left small{ color:var(--accent); font-weight:600; letter-spacing:1.1px }
+  .headline{ font-size:48px; line-height:1.02; margin:20px 0; font-weight:700; letter-spacing:0.6px }
+  .headline .accent{ color:var(--accent); text-shadow:0 8px 40px rgba(0,230,216,0.06); }
+  .lead{ color:var(--muted); max-width:56ch; margin-top:14px }
+
+  .hero-right{
+    background: linear-gradient(180deg, rgba(0,0,0,0.14), rgba(255,255,255,0.02));
+    padding:26px; border-radius:18px; box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    display:flex; align-items:center; justify-content:center; position:relative;
+  }
+  .profile-wrap{ position:relative; width:300px; height:420px; border-radius:22px; }
+  .profile {
+    width:100%; height:100%; object-fit:cover; border-radius:18px;
+    box-shadow: 0 18px 50px rgba(0,0,0,0.8), 0 0 80px rgba(0,230,216,0.12);
+    border: 1px solid rgba(0,230,216,0.06);
+    filter: saturate(0.95) contrast(1.02);
+  }
+  .neon-frame{
+    position:absolute; inset:auto -6% -6% -6%; z-index:-1; border-radius:22px;
+    width:112%; height:112%;
+    box-shadow: 0 0 80px rgba(0,230,216,0.12), inset 0 0 40px rgba(0,230,216,0.06);
+    transform: rotate(-2deg);
+    opacity:0.9;
+    transition: transform .6s;
+  }
+  .profile-wrap:hover .neon-frame{ transform: rotate(0deg) scale(1.02) }
+
+  /* Services / small boxes on right of hero style mimic */
+  .mini-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-top:26px }
+  .mini-card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    padding:14px; border-radius:12px; color:var(--text);
+    box-shadow:0 10px 30px rgba(0,0,0,0.5); border:1px solid rgba(0,0,0,0.2);
+  }
+  .mini-card h4{ margin:0 0 8px 0; font-size:14px; color:var(--accent) }
+
+  /* Section title style */
+  .section-title{ font-size:28px; margin:8px 0 20px 0; color:var(--text) }
+  .section-sub{ color:var(--muted); margin-bottom:12px }
+
+  /* Who we are background big letters */
+  .big-letters{ position:absolute; left:50%; transform:translateX(-50%); top:40vh; font-size:160px; color:rgba(0,0,0,0.04); pointer-events:none; z-index:0 }
+
+  /* Cards grid */
+  .grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:22px; margin-top:18px }
+
+  /* Flip card for certificates & projects */
+  .flip { perspective:1000px }
+  .inner {
+    position:relative; width:100%; height:220px; transition: transform .6s; transform-style: preserve-3d;
+  }
+  .card-face {
+    position:absolute; inset:0; border-radius:12px; backface-visibility:hidden; display:flex; align-items:center; justify-content:center;
+    padding:18px; color:var(--text); font-weight:600; text-align:center;
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(255,255,255,0.02);
+  }
+  .front {box-shadow: 0 0 15px #00ffe0; background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.008)); }
+  .back {box-shadow: 0 0 15px #00ffe0;
+    transform: rotateY(180deg);
+    background: linear-gradient(180deg, rgba(0,0,0,0.16), rgba(0,0,0,0.06));
+    color:var(--accent);
+  }
+  .flip:hover .inner { transform: rotateY(180deg) }
+
+  .card-title { font-size:18px; color:var(--accent); margin-bottom:8px }
+  .card-desc{ color:var(--muted); font-size:13px }
+
+  /* Stats row */
+  .stats { display:flex; gap:22px; justify-content:center; margin-top:40px }
+  .stat { text-align:center; padding:14px 18px; background:var(--glass); border-radius:10px; min-width:110px; }
+  .stat h3{ margin:0; color:var(--accent); font-size:22px }
+
+  /* About/Education styles */
+  .about-row{ display:flex; gap:26px; align-items:flex-start; margin-top:12px; flex-wrap:wrap }
+  .about-info{ flex:1; min-width:260px }
+  .edu-list{ display:flex; flex-direction:column; gap:12px }
+
+  /* Skills */
+  .skills{ display:flex; gap: 20px; flex-wrap:wrap; margin-top:10px;
+ }
+  .skill{  background: #111;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00ffe0;
+    flex: 1;
+    min-width: 200px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+    
+   
+  Contact */
+  .contact-card{  padding:18px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); box-shadow:var(--card-shadow) }
+  input, textarea{ width:100%; padding:12px 14px; border-radius:8px; border: 1px solid rgba(255,255,255,0.03); background:transparent; color:var(--text) }
+  input::placeholder, textarea::placeholder{ color: rgba(200,220,220,0.3) }
+  .btn { text-decoration: none;
+    background: linear-gradient(90deg,var(--accent),var(--accent-2)); color:#051010; padding:12px 16px; border-radius:10px; border:none; cursor:pointer; font-weight:700; box-shadow:0 10px 30px rgba(0,230,216,0.08) }
+
+
+  /* reveal animation */
+  .reveal{ opacity:0; transform: translateY(30px); transition: all .7s cubic-bezier(.2,.9,.2,1) }
+  .reveal.visible{ opacity:1; transform:none }
+
+  /* small screens */
+  @media (max-width:620px){
+    .hero{ grid-template-columns:1fr; gap:20px }
+    .hero-right{ padding:18px }
+    header { padding:14px; }
+    nav { gap:12px }
+    .headline{ font-size:32px }
+  }
+.linkedin-logo{
+  width: 48px;
+  margin-top: 20px;
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="brand">
+    <div class="logo-dot">P</div>
+    <div>
+      <div style="font-size:12px;color:var(--muted)">PORTFOLIO</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px">pawan kesarwani</div>
+    </div>
+  </div>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">skills</a>
+    <a href="#education">Education</a>
+    <a href="#certificates">Certificates</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="hero-left">
+      <small></small>
+      <h2 class="headline">HI I'M
+        <br> <span class="accent">PAWAN KESARWANI</span><br/></h2>
+      <p class="lead">I’m a CSE student in MNMJEC college passionate about crafting modern, responsive, and accessible websites. I blend design sense with clean code to build delightful user experiences — from pixel-perfect UI to interactive front-end logic.</p>
+
+      <div style="margin-top:26px; display:flex; gap:14px; align-items:center;">
+        <button class="btn" onclick="document.querySelector('#projects').scrollIntoView({behavior:'smooth'})">View Projects</button>
+        <a class="btn" href="#contact" style="background:transparent; border:1px solid rgba(255,255,255,0.05); color:var(--accent)">Contact Me</a>
+      </div>
+
+      
+    </div>
+
+    <aside class="hero-right reveal">
+      <div class="profile-wrap">
+        <img class="profile" src="WhatsApp Image 2025-07-05 at 10.41.36 PM.jpeg" alt="Profile">
+        <div class="neon-frame" aria-hidden="true"></dihttpsv>
+      </div>
+
+     
+    </aside>
+  </section>
+<br>
+<br><br><br><br>
+  
+
+  <!-- ABOUT -->
+  <section id="about" class="reveal">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:28px; flex-wrap:wrap">
+      <div style="flex:1; min-width:300px">
+        <div class="section-sub">ABOUT ME</div>
+        <h3 class="section-title">I AM  <span style="color:var(--accent)">PAWAN KESARWANI</span></h3>
+        <p style="color:var(--muted)">I am a web development student building a strong foundation in front-end and full-stack development. I enjoy turning ideas into working, pixel-perfect products. Learning modern JavaScript, React, and backend basics (Node/Express) are part of my routine. I like clean code, accessible UI, and delightful micro-interactions.</p>
+
+        <div style="margin-top:18px" class="about-row">
+          <div class="about-info">
+            <h4 style="color:var(--accent); margin:0 0 8px 0">interest</h4>
+            <p style="color:var(--muted); margin:0 0 12px 0">i have interest in playing chess,cricket,carrom,badminton,cooking and also in coding etc.</p>
+
+          </div>
+
+          <div style="min-width:220px">
+            <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=39b0a3b17f4f2a4f6a8d2b2c1c0e3f4b" alt="About image" style="width:220px;border-radius:12px;box-shadow:var(--card-shadow)">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section><br>
+<br><br><br><br>
+
+
+<!-- Skills & Stats -->
+  <section id="skills" class="reveal">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px">
+      <div style="flex:1; min-width:260px">
+        <div class="section-sub">EXPERTISE</div>
+        <h3 class="section-title">SKILLS</h3>
+        <div class="skills">
+          <div class="skill">python</div>
+          <div class="skill">java</div>
+          <div class="skill">sql</div>
+          <div class="skill">HTML</div>
+          <div class="skill">CSS</div>
+          <div class="skill">JavaScript</div>
+          <div class="skill">c</div>
+          <div class="skill">c++</div>
+          <div class="skill">ui ux </div>
+
+         
+        </div>
+      </div>
+
+      
+  </section>
+
+<br>
+<br><br><br><br>
+
+  <!-- Education -->
+  <section id="education" class="reveal">
+    <div class="section-sub">EDUCATION</div>
+    <h3 class="section-title">MY ACADEMIC <span style="color:var(--accent)">BACKGROUND</span></h3>
+
+    <div class="grid">
+      <div class="card" style="padding:18px">
+        <div style="font-weight:700;color:var(--accent)">B.E — Computer Science and Engineering </div>
+        <div style="color:var(--muted); margin-top:8px">misrimal navajee munoth jain engineering college  — 2023 — Present</div>
+        <div style="margin-top:10px;color:var(--muted);font-size:13px">Relevant: Data Structures, Web Technologies, DBMS, Software Engg.</div>
+      </div>
+
+      <div class="card" style="padding:18px">
+        <div style="font-weight:700;color:var(--accent)">schooling</div>
+        <div style="color:var(--muted); margin-top:8px">ST.THOMAS GROUP OF SCHOOL </div>
+         <div style="margin-top:10px;color:var(--muted);font-size:13px">subject: physics,chemistry,maths.(pcm)
+         </div>
+      </div>
+
+      
+    </div>
+  </section>
+  <br>
+<br><br><br><br>
+
+
+  <!-- Certificates -->
+  <section id="certificates" class="reveal">
+    <div class="section-sub">MY ACHIEVEMENTS</div>
+    <h3 class="section-title">CERTIFICATES & <span style="color:var(--accent)">COURSES</span></h3>
+
+    <div class="grid">
+      <!-- 8 certificate flip cards (replace # with real certificate URLs) -->
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">AWS</div><div class="card-desc">solution architecture</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://drive.google.com/file/d/1HEJND3SfUAxsn5jRQ8MOLSsElh0Achas/view?usp=drivesdk')">Visit Certificate</a></div>
+      </div></div>
+
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">ACCENTURE</div><div class="card-desc">software engineering</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://drive.google.com/file/d/1EJyEl0fj518pzVceRkXb8P_QZ7zR3Ye7/view?usp=drivesdk')">Visit Certificate</a></div>
+      </div></div>
+
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">PRODIGY INFOTECH</div><div class="card-desc">web dev internship</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://drive.google.com/file/d/1KlqlJROSAfpmac1L6XQAq7KRo57XOSTZ/view?usp=drivesdk')">Visit Certificate</a></div>
+      </div></div>
+
+       
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">codsoft</div><div class="card-desc">ui ux internship</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://drive.google.com/file/d/1KobmT8wP20xLawPrjQgyUVAEiE6nlbSI/view?usp=drivesdk')">Visit Certificate</a></div>
+      </div></div>
+
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">META</div><div class="card-desc">front-end development</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://drive.google.com/file/d/1EfyHWgZhd-Fu-6uo14sVwJEwBCJPR6jN/view?usp=drivesdk')">Visit Certificate</a></div>
+      </div></div>
+
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">GOOGLE</div><div class="card-desc">introducing to gen AI</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://drive.google.com/file/d/1EMcvy6_xkdMt558-jQkAExs_nD1fxQ1F/view?usp=drivesdk')">Visit Certificate</a></div>
+      </div></div>
+
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">SIMPLI LEARN</div><div class="card-desc">introducing to IOT</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://drive.google.com/file/d/1FUvVDeMEQkeDP6V4EMEOWJseiENGnSM3/view?usp=drivesdk')">Visit Certificate</a></div>
+      </div></div>
+
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">INFOSYS</div><div class="card-desc">cloud technologies</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://drive.google.com/file/d/1DxxWc7gJjd1TMYAiwqotRvVmA0dcc9jn/view?usp=drivesdk')">Visit Certificate</a></div>
+      </div></div>
+
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">INFOSYS</div><div class="card-desc">drone</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://drive.google.com/file/d/1DxFBwYaC61LKyMUkJaXo8BY7bP1y1M69/view?usp=drivesdk')">Visit Certificate</a></div>
+      </div></div>
+
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">lets upgrade</div><div class="card-desc">react</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://drive.google.com/file/d/1E9ryErOI-fABG6a0WYN8bikKiMdwVRiD/view?usp=drivesdk')">Visit Certificate</a></div>
+      </div></div>
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">HP LIFE</div><div class="card-desc">AI for beginners</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://drive.google.com/file/d/1E4gZv2gGk9afCuuSz1Y6c4M_4telRccV/view?usp=drivesdk')">Visit Certificate</a></div>
+      </div></div>
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">NAAN MUDHALVAN</div><div class="card-desc">Certificate</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://drive.google.com/file/d/1EA6NDkEE4bs-JRHdgFU1P_s6ZAPdqz5_/view?usp=drivesdk')">Visit Certificate</a></div>
+      </div></div>
+
+
+    </div>
+  </section>
+  <br>
+<br><br><br><br>
+
+
+  <!-- Projects -->
+  <section id="projects" class="reveal">
+    <div class="section-sub">WORK</div>
+    <h3 class="section-title">PROJECTS & <span style="color:var(--accent)">CASE STUDIES</span></h3>
+
+    <div class="grid">
+      <!-- 6 project flip cards (replace URLs) -->
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">Portfolio Website</div><div class="card-desc">Responsive personal site</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://example.com/project-portfolio')">View Project</a></div>
+      </div></div>
+
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">stop watch</div><div class="card-desc">html css & js
+        </div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://pawankesarwani1.github.io/PRODIGY_WD_02/')">View Project</a></div>
+      </div></div>
+
+      
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title"> IPL FANPAGE</div><div class="card-desc">basic ipl fanpage</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'')">View Project</a></div>
+      </div></div>
+
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">Weather App</div><div class="card-desc">API integration</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://rb1507.github.io/PRODIGY_WD_05/')">View Project</a></div>
+      </div></div>
+
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">signup page</div><div class="card-desc">uiux</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://www.figma.com/proto/RnLtbbjTuNVNOFRdClkkcC/Untitled?page-id=2%3A2&node-id=7-3&p=f&viewport=-62%2C272%2C0.19&t=CRc2xiwxkVqMRaln-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=7%3A3')">View Project</a></div>
+      </div></div>
+
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">restaurent menu</div><div class="card-desc">interactive</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://www.figma.com/proto/hEq1LvFVJtOWAfyY3v7aXs/Untitled?node-id=24-207&t=z9GHonKyteklKcYs-1&starting-point-node-id=15%3A166')">View Project</a></div>
+      </div></div>
+
+      <div class="flip"><div class="inner">
+        <div class="card-face front"><div><div class="card-title">email-template</div><div class="card-desc">figma</div></div></div>
+        <div class="card-face back"><a href="#" onclick="openLink(event,'https://www.figma.com/design/PcGhUD8wI3dchXmc855Qh7/Untitled?node-id=22-2&t=KFYFGdK9gGbMAwF3-1')">View Project</a></div>
+      </div></div>
+    </div>
+  </section>
+  <br>
+<br><br><br><br>
+
+  <!-- Contact -->
+   <section id="contact" class="reveal">
+         <div style="width:320px; min-width:240px">
+        <div class="section-sub">CONTACT INFO</div>
+        <div class="card" style="padding:14px">
+          <div style="color:var(--muted)">Email</div>
+          <div style="font-weight:700;color:var(--accent); margin-bottom:10px">pawankesarwani650@gmail.com</div>
+
+          <div style="color:var(--muted)">Phone</div>
+          <div style="font-weight:700;color:var(--accent)">+123 456 789</div>
+
+          <div style="margin-top:12px;color:var(--muted)">Location</div>
+          <div style="font-weight:700">chennai,india</div>
+           <a href="https://www.linkedin.com/in/YOUR-LINKEDIN-USERNAME" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" class="linkedin-logo">
+    </a>
+        </div>
+      </div>
+    </div>
+   </section><br>
+<br><br>
+
+  <section id="contact" class="reveal">
+    <div style="display:flex; gap:28px; flex-wrap:wrap">
+      <div style="flex:1; min-width:320px">
+        <div class="section-sub">GET IN TOUCH</div>
+        <h3 class="section-title">CONTACT <span style="color:var(--accent)">ME</span></h3>
+        <!-- <p style="color:var(--muted)">Have a project or just want to say hi? Send me a message and I'll get back to you.</p> -->
+
+        <div style="margin-top:18px" class="contact-card">
+          <form id="contactForm">
+            <input id="name" placeholder="Your name" required />
+            <input id="email" type="email" placeholder="Your email" required />
+            <textarea id="message" rows="5" placeholder="Your message"></textarea>
+            <div style="margin-top:12px; display:flex; gap:12px">
+              <button class="btn" type="submit">Send Message</button>
+              <button type="button" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent)" onclick="copyEmail()">Copy Email</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+  </section><br>
+<br><br><br><br>
+
+  
+</main>
+
+<script>
+
+
+  
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, {threshold: 0.12});
+  reveals.forEach(r => obs.observe(r));
+
+  // certificate/project link opener (prevents navigation when href="#" used)
+  function openLink(e, url){
+    e.preventDefault();
+    if(!url) return;
+    window.open(url, '_blank');
+  }
+
+  // contact form
+  document.getElementById('contactForm').addEventListener('submit', (e) =>{
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    // simple validation
+    if(!name || !email) {
+      alert('Please enter name and email.');
+      return;
+    }
+    // here you would normally send to your backend or email service
+    alert('Thanks, ' + name + '! Your message has been received. (Demo)');
+    e.target.reset();
+  });
+
+  // copy email helper
+  function copyEmail(){
+    navigator.clipboard?.writeText('youremail@example.com').then(()=>{
+      alert('Email copied to clipboard!');
+    }).catch(()=>{
+      alert('Copy failed. Email: youremail@example.com');
+    });
+  }
+
+  // small: smooth nav links behavior (close to native)
+  document.querySelectorAll('nav a').forEach(a=>{
+    a.addEventListener('click', (ev)=>{
+      ev.preventDefault();
+      const href = a.getAttribute('href');
+      const el = document.querySelector(href);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+</script>
+</body>
+</html>
